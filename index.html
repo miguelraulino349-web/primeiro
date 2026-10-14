@@ -2,33 +2,162 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Site</title>
-  <style>
-    body {
-      background: #101020;
-      color: white;
-      text-align: center;
-      font-family: Arial;
-      padding-top: 80px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevAcademy</title>
 
-    button {
-      background: #7c3aed;
-      color: white;
-      padding: 15px 25px;
-      border: none;
-      border-radius: 10px;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090b14;color:white;font-family:Arial}
+header{text-align:center;padding:25px;background:#141a2c}
+h1 span{color:#a78bfa}
+nav{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+nav a{color:#38bdf8;text-decoration:none}
+main{max-width:800px;margin:auto;padding:15px}
+.card{background:#141a2c;border:1px solid #303650;padding:20px;border-radius:14px;margin:18px 0}
+button{background:#8b5cf6;color:white;border:0;border-radius:8px;padding:12px;cursor:pointer;margin:5px 0}
+p{color:#c1c7d8;line-height:1.6}
+pre{background:#080b13;color:#7dd3fc;padding:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+textarea{width:100%;height:200px;background:#080b13;color:#7dd3fc;padding:12px}
+iframe{width:100%;height:220px;background:white}
+.lesson{padding:12px 0;border-bottom:1px solid #303650}
+</style>
 </head>
-<body>
-  <h1>Meu primeiro site!</h1>
-  <p>Estou aprendendo HTML 🔥</p>
 
-  <button onclick="alert('Funcionou!')">
-    Clica aqui
-  </button>
+<body>
+
+<header>
+<h1>⚡ Dev<span>Academy</span></h1>
+<p>Aprenda Lua e HTML do zero!</p>
+<nav>
+<a href="#lua">Lua</a>
+<a href="#html">HTML</a>
+<a href="#editor">Editor</a>
+</nav>
+</header>
+
+<main>
+<div class="card">
+<h2>🚀 Bem-vindo!</h2>
+<p>Aprenda a criar jogos no Roblox com Lua e sites com HTML.</p>
+<p>Aulas concluídas: <b id="contador">0</b>/6</p>
+</div>
+
+<section id="lua" class="card">
+<h2>🎮 Curso de Lua</h2>
+
+<div class="lesson">
+<h3>Aula 1: Primeiro código</h3>
+<p>O print mostra mensagens no console.</p>
+<pre>print("Olá, mundo!")</pre>
+<button onclick="concluir('lua1')">Concluir aula</button>
+</div>
+
+<div class="lesson">
+<h3>Aula 2: Variáveis</h3>
+<p>Variáveis guardam valores.</p>
+<pre>local moedas = 100
+local nome = "Jogador"
+
+print(moedas)
+print(nome)</pre>
+<button onclick="concluir('lua2')">Concluir aula</button>
+</div>
+
+<div class="lesson">
+<h3>Aula 3: Condições</h3>
+<pre>local moedas = 20
+
+if moedas >= 10 then
+    print("Pode comprar!")
+else
+    print("Faltam moedas!")
+end</pre>
+<button onclick="concluir('lua3')">Concluir aula</button>
+</div>
+</section>
+
+<section id="html" class="card">
+<h2>🌐 Curso de HTML</h2>
+
+<div class="lesson">
+<h3>Aula 1: Títulos</h3>
+<pre>&lt;h1&gt;Meu site&lt;/h1&gt;
+&lt;p&gt;Olá, mundo!&lt;/p&gt;</pre>
+<button onclick="concluir('html1')">Concluir aula</button>
+</div>
+
+<div class="lesson">
+<h3>Aula 2: Botões</h3>
+<pre>&lt;button onclick="alert('Oi!')"&gt;
+Clique aqui
+&lt;/button&gt;</pre>
+<button onclick="concluir('html2')">Concluir aula</button>
+</div>
+
+<div class="lesson">
+<h3>Aula 3: Cores</h3>
+<pre>&lt;style&gt;
+body {
+  background: purple;
+  color: white;
+}
+&lt;/style&gt;</pre>
+<button onclick="concluir('html3')">Concluir aula</button>
+</div>
+</section>
+
+<section id="editor" class="card">
+<h2>🧪 Teste seus códigos HTML</h2>
+<p>Apague o exemplo, escreva seu código e execute!</p>
+
+<textarea id="codigo"><!DOCTYPE html>
+<html>
+<body style="background:#101020;color:white;text-align:center">
+<h1>Meu primeiro site!</h1>
+<p>Estou aprendendo HTML!</p>
+<button onclick="alert('Funcionou!')">Clique aqui</button>
+</body>
+</html></textarea>
+
+<br>
+<button onclick="executar()">▶ Executar código</button>
+<iframe id="resultado" title="Resultado" sandbox="allow-scripts"></iframe>
+</section>
+
+<div class="card">
+<h2>🏆 Desafio</h2>
+<p>Crie um site com título, parágrafo e botão usando o editor!</p>
+</div>
+</main>
+
+<footer style="text-align:center;padding:25px;color:#aaa">
+DevAcademy ⚡ Aprenda, pratique e crie!
+</footer>
+
+<script>
+let feitas = JSON.parse(localStorage.getItem("aulasDev") || "[]");
+
+function concluir(id){
+    if(!feitas.includes(id)){
+        feitas.push(id);
+        localStorage.setItem("aulasDev",JSON.stringify(feitas));
+    }
+    atualizar();
+}
+
+function atualizar(){
+    document.getElementById("contador").textContent=feitas.length;
+}
+
+function executar(){
+    document.getElementById("resultado").srcdoc=
+    document.getElementById("codigo").value;
+}
+
+atualizar();
+executar();
+</script>
+
 </body>
 </html>
